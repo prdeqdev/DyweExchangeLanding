@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#07060d">
+  <meta name="theme-color" content="#070709">
   <meta name="description" content="Dywe Exchange — neutral non-custodial derivatives clearing CLOB with 50 ms BLS12-381 threshold-encrypted micro-batches and post-decrypt ALO-first ordering.">
   <title>Dywe Exchange</title>
   <link rel="icon" type="image/svg+xml" href="images/main-logo.svg">
@@ -326,7 +326,7 @@
       <h2 class="h2">Deposit native USDC from where it already sits.</h2>
       <p class="lead">Canonical Circle CCTP burns USDC on your source network and mints it directly into one unified margin vault. Zero wrapped tokens, zero third-party bridge risk.</p>
       <ul class="points">
-        <li><span><b>Five core networks at launch.</b> Arbitrum, Base, Solana, Ethereum, and BNB Chain (BSC), built on an open adapter model scaling to 20+ chains.</span></li>
+        <li><span><b>Four core networks at launch.</b> Arbitrum, Base, Solana, and Ethereum, built on an open adapter model scaling to 20+ chains.</span></li>
         <li><span><b>Start trading in under two seconds.</b> Universal Soft-Credit grants instant trading power as soon as your source-chain deposit is verified, without waiting for slow cross-chain finality.</span></li>
         <li><span><b>Protected by dedicated liquidity reserves.</b> Instant cross-chain pre-crediting is backed by isolated protocol liquidity buffers and a dedicated SAFU insurance reserve.</span></li>
       </ul>
@@ -458,7 +458,7 @@
     <div>
       <p class="eyebrow">Copy-Trading &amp; Strategy Marketplace</p>
       <h2 class="h2">Mirror top quant strategies. Never surrender custody.</h2>
-      <p class="lead">Experienced traders and quant desks deploy autonomous on-chain smart vaults in one click. Followers allocate native USDC directly into audited smart contracts while retaining full withdrawal control.</p>
+      <p class="lead">Experienced traders and quant desks deploy autonomous on-chain smart vaults in one click. Followers allocate native USDC directly into non-custodial smart contracts while retaining full withdrawal control.</p>
       <ul class="points">
         <li><span><b>Scoped trading permissions.</b> Vault managers execute trades under hard leverage caps and automated drawdown stop-outs, with zero withdrawal access to follower principal.</span></li>
         <li><span><b>Atomic execution inside sealed IBTE batches</b> shields large vault rebalances (≥$50k) from front-running by external MEV searchers or vault leaders.</span></li>
@@ -489,7 +489,7 @@
           <li><b>0.020% taker fees</b> with −22% to −48% lower All-In cost under MEV vs. open CLOBs.</li>
           <li><b>Dywe Pulse &amp; AI</b> embedded directly in the order book.</li>
           <li><b>1-click copy-trading</b> in non-custodial ERC-4626 smart vaults.</li>
-          <li><b>&lt;2s Universal Soft-Credit</b> across 5+ chains via Circle CCTP.</li>
+          <li><b>&lt;2s Universal Soft-Credit</b> across 4+ chains via Circle CCTP.</li>
         </ul>
         <button class="btn btn-ghost" data-wl data-role="trader">Join as a trader</button>
       </article>
@@ -531,7 +531,7 @@
     <div class="vs">
       <div class="vs-h"><span>Transparent On-Chain Perp DEXs</span><span class="us">Dywe Exchange</span></div>
       <div class="vs-r"><p>Open mempools expose resting quotes to stale-quote sniping and large sweeps (≥$50k) to sandwich MEV.</p><b aria-hidden="true">→</b><p>50 ms IBTE (BLS12-381) + post-decrypt ALO-first priority: −40.4% toxic markout at +0.005 bps zero-MEV overhead.</p></div>
-      <div class="vs-r"><p>Collateral locked in custom single-chain bridges with long finality delays.</p><b aria-hidden="true">→</b><p>Canonical Circle CCTP across 5+ chains with &lt;2s Universal Soft-Credit.</p></div>
+      <div class="vs-r"><p>Collateral locked in custom single-chain bridges with long finality delays.</p><b aria-hidden="true">→</b><p>Canonical Circle CCTP across 4+ chains with &lt;2s Universal Soft-Credit.</p></div>
       <div class="vs-r"><p>Internal house pools monetize transparent order flow and open liquidation mechanics.</p><b aria-hidden="true">→</b><p>100% neutral Peer-to-Peer zero-sum CLOB clearing backed by native USDC.</p></div>
       <div class="vs-r"><p>Bare candlestick charts requiring paid third-party SaaS terminals.</p><b aria-hidden="true">→</b><p>Embedded Dywe Pulse (&lt;100 ms live telemetry), AI Copilot &amp; non-custodial vaults.</p></div>
     </div>
@@ -551,7 +551,7 @@
         <ul>
           <li>In-memory Stylus Rust CLOB (&lt;10 ms) &amp; Threshold IBTE (BLS12-381)</li>
           <li>10–20 liquid pairs settled in native USDC</li>
-          <li>Circle CCTP across 5 chains + &lt;2s Soft-Credit</li>
+          <li>Circle CCTP across 4 chains + &lt;2s Soft-Credit</li>
           <li>Dywe Pulse, AI Copilot &amp; Copy-Trading vaults</li>
           <li>Tier-1 security audits prior to public mainnet</li>
         </ul>
@@ -661,12 +661,12 @@
     <div class="faq">
       <details open>
         <summary>How do encrypted micro-batches reduce adverse selection and MEV?</summary>
-        <p>On transparent CLOBs, latency bots snipe stale market maker quotes during external price moves and sandwich large directional orders (≥$50k) in the mempool—forcing makers to widen spreads. Dywe encrypts order parameters client-side via BLS12-381 threshold encryption (IBTE) inside 50 ms micro-batches, decrypts in matching-engine memory (~35 ms), and executes New (ALO) → Cancel → Taker priority before fills clear. In our open-source Rust backtest across Native L1 Binance Futures data, this cuts 1s toxic MM markout by 40.4% vs. FIFO (−87.1% stale sniping) with 0.0% dropped volume and only +0.005 bps overhead at zero MEV, while cutting taker All-In costs by 22%–48% when MEV is present.</p>
+        <p>On transparent CLOBs, latency bots snipe stale market maker quotes during external price moves and sandwich large directional orders (≥$50k) in the mempool—forcing makers to widen spreads. Dywe encrypts order parameters client-side via BLS12-381 threshold encryption (IBTE) inside 50 ms micro-batches, decrypts in matching-engine memory (~35 ms), and executes New (ALO) → Cancel → Taker priority before fills clear. In our open-source Rust backtest across Native L1 Binance Futures data (v0.3.3), this cuts 1s toxic MM markout by 40.4% vs. FIFO (−87.1% stale sniping) with 0.0% dropped volume and +0.005 bps zero-MEV overhead, while reducing taker All-In costs by 22%–48% in parameterized MEV scenarios (25%–50% capture / 1.0 bp impact).</p>
       </details>
 
       <details>
         <summary>Who holds custody of my collateral?</summary>
-        <p>You always maintain sovereign control. All native USDC deposits reside in audited, non-custodial smart contracts. Neither the exchange sequencer, nor copy-trading vault operators, nor any automated system has withdrawal permissions over your principal.</p>
+        <p>You always maintain sovereign control. All native USDC deposits are held in non-custodial smart contracts undergoing independent Tier-1 security audits prior to mainnet. Neither the exchange sequencer, nor copy-trading vault operators, nor any automated system has withdrawal permissions over your principal.</p>
       </details>
 
       <details>
@@ -681,7 +681,7 @@
 
       <details>
         <summary>Which networks can I deposit from?</summary>
-        <p>At launch, native USDC deposits clear directly across Arbitrum, Base, Solana, Ethereum, and BNB Chain (BSC) via official Circle CCTP burn-and-mint mechanics. Our modular adapter architecture is designed to expand across 20+ additional chains without wrapped tokens or synthetic bridges.</p>
+        <p>At launch, native USDC deposits clear directly across Arbitrum, Base, Solana, and Ethereum via official Circle CCTP burn-and-mint mechanics. Our modular adapter architecture is designed to expand across 20+ additional chains without wrapped tokens or synthetic bridges.</p>
       </details>
 
       <details>
@@ -691,7 +691,7 @@
 
       <details>
         <summary>How do liquidations work, and am I protected from flash wicks?</summary>
-        <p>The protocol enforces multi-layered risk guards: a median oracle filter rejects outlier price manipulation spikes in real time. If margin thresholds are breached, positions enter a 15-second grace period followed by partial liquidations in 25% tranches—protecting the remaining 75% of your position rather than wiping out your entire equity at once. Extreme market gap risks are further absorbed by the protocol's dedicated SAFU insurance fund.</p>
+        <p>The protocol enforces multi-layered risk guards: a median oracle filter rejects outlier price manipulation spikes in real time. Moderate margin breaches trigger a brief risk-check grace window before incremental partial liquidations in 25% tranches—preserving the remaining 75% of your position against flash wicks while enforcing immediate liquidation thresholds on extreme tail moves. Any residual market gap risk is absorbed by the protocol's dedicated SAFU insurance fund.</p>
       </details>
 
       <details>
@@ -700,8 +700,8 @@
       </details>
 
       <details>
-        <summary>How do developer integrations and the Builder SDK work?</summary>
-        <p>Developers building non-custodial wallets, custom trading interfaces, or algorithmic execution bots can connect via our zero-bond Volume-Gated SDK. Higher API rate limits and low-latency WebSocket quotas unlock automatically as your volume grows, while verified ecosystem partners can apply for custom partner revenue tiers and grant programs.</p>
+        <summary>How do developer integrations, Builder SDK, and Dywe EVM work?</summary>
+        <p>Developers building non-custodial wallets, custom trading terminals, or algorithmic execution bots can connect on Phase 1 via our zero-bond Volume-Gated Builder SDK—unlocking elevated API quotas and partner revenue tiers automatically as volume scales. In Phase 2, our decoupled Dywe EVM layer lets external B2B teams deploy full DeFi, RWA, and copy-trading applications directly on top of Dywe Exchange's shared liquidity.</p>
       </details>
 
       <details>
@@ -784,7 +784,7 @@
       <div>
         <h4>Contact</h4>
         <ul>
-          <li><a href="mailto:need">dyweceo@dywe.exchange</a></li>
+          <li><a href="mailto:dyweceo@dywe.exchange">dyweceo@dywe.exchange</a></li>
           <li><a href="https://dywe.exchange" target="_blank" rel="noopener noreferrer">dywe.exchange</a></li>
           <li><a href="https://github.com/prdeqdev/DyweRustMicrostructuralAblationBacktest" target="_blank" rel="noopener noreferrer">GitHub Backtest (v0.3.3)</a></li>
         </ul>

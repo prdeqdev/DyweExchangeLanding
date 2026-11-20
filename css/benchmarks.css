@@ -1,4 +1,11 @@
+/* ==========================================================================
+   DYWE — OPEN-SOURCE BENCHMARKS (benchmarks.css)
+   Строгий терминальный вид + исправленный мобильный адаптив (zero overflow).
+   ========================================================================== */
 
+#benchmarks {
+  overflow-x: clip;
+}
 
 #benchmarks .bm-head {
   display: flex;
@@ -10,6 +17,7 @@
 }
 
 #benchmarks .bm-head > div:first-child {
+  min-width: 0;
   max-width: 720px;
 }
 
@@ -17,11 +25,12 @@
 #benchmarks .bm-tab code,
 #benchmarks .bm-footnote code {
   font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.88em;
-  padding: 1px 6px;
-  border-radius: 5px;
-  background: var(--panel2, rgba(255, 255, 255, 0.06));
-  border: 1px solid var(--line2, rgba(255, 255, 255, 0.1));
+  font-size: 0.86em;
+  padding: 1px 5px;
+  border-radius: 2px;
+  background: var(--panel2, #151820);
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+  color: var(--text, #f2f4f8);
 }
 
 #benchmarks .bm-actions {
@@ -29,120 +38,139 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
+  min-width: 0;
 }
 
 #benchmarks .bm-badge {
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 12px;
-  color: var(--muted, #9b97b0);
-  letter-spacing: 0.01em;
+  font-size: 11.5px;
+  color: var(--dim, #626b7c);
+  letter-spacing: 0.02em;
 }
 
-/* Dataset tabs */
+/* Dataset tabs — sharp segmented bar */
 #benchmarks .bm-controls {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin-bottom: 22px;
+  gap: 1px;
+  background: var(--line, rgba(255, 255, 255, 0.08));
+  border: 1px solid var(--line2, rgba(255, 255, 255, 0.16));
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 18px;
 }
 
 #benchmarks .bm-tab {
   appearance: none;
+  min-width: 0;
   text-align: left;
   cursor: pointer;
   padding: 14px 16px;
-  border-radius: 12px;
-  background: var(--panel, rgba(255, 255, 255, 0.025));
-  border: 1px solid var(--line2, rgba(255, 255, 255, 0.1));
+  border: 0;
+  border-top: 2px solid transparent;
+  border-radius: 0;
+  background: var(--bg2, #0b0c10);
   color: inherit;
-  transition: border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
 #benchmarks .bm-tab:hover {
-  border-color: var(--accent, #a78bfa);
-  transform: translateY(-1px);
+  background: var(--panel, #0e1015);
 }
 
 #benchmarks .bm-tab.is-active {
-  background: var(--accent-soft, rgba(167, 139, 250, 0.12));
-  border-color: var(--accent, #a78bfa);
+  background: var(--panel, #0e1015);
+  border-top-color: var(--accent, #b784ff);
 }
 
 #benchmarks .bm-tab strong {
   display: block;
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 600;
   margin-bottom: 4px;
+  color: var(--text, #f2f4f8);
 }
 
 #benchmarks .bm-tab span {
   display: block;
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 12px;
-  color: var(--muted, #9b97b0);
+  font-size: 11.5px;
+  color: var(--muted, #98a1b2);
+  overflow-wrap: anywhere;
 }
 
-/* 4 KPI summary cards */
+/* 4 KPI telemetry strip — fused 1px hairline ledger */
 #benchmarks .bm-kpis {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-  margin-bottom: 22px;
+  gap: 1px;
+  background: var(--line, rgba(255, 255, 255, 0.08));
+  border: 1px solid var(--line2, rgba(255, 255, 255, 0.16));
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 18px;
 }
 
 #benchmarks .bm-kpi {
-  padding: 18px 18px 16px;
-  border-radius: 14px;
-  background: var(--panel2, rgba(255, 255, 255, 0.035));
-  border: 1px solid var(--line2, rgba(255, 255, 255, 0.09));
+  min-width: 0;
+  padding: 20px 18px 18px;
+  border: 0;
+  border-radius: 0;
+  background: #0a0b0e;
 }
 
 #benchmarks .bm-kpi-label {
   display: block;
-  font-size: 12px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10.5px;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--muted, #9b97b0);
-  margin-bottom: 8px;
+  letter-spacing: 0.08em;
+  color: var(--dim, #626b7c);
+  margin-bottom: 10px;
 }
 
 #benchmarks .bm-kpi-val {
   display: block;
-  font-family: "Bricolage Grotesque", sans-serif;
-  font-size: clamp(22px, 2.2vw, 30px);
-  font-weight: 700;
-  line-height: 1.1;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(20px, 2.1vw, 28px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
   margin-bottom: 8px;
+  color: var(--text, #f2f4f8);
 }
 
 #benchmarks .bm-kpi-val.is-good {
-  color: #4ade80;
+  color: var(--buy, #22c58b);
 }
 
 #benchmarks .bm-kpi-val.is-accent {
-  color: var(--accent, #c4b5fd);
+  color: var(--accent, #b784ff);
 }
 
 #benchmarks .bm-kpi-sub {
   margin: 0;
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 12px;
+  font-size: 11.5px;
   line-height: 1.45;
-  color: var(--dim, #8a869e);
+  color: var(--muted, #98a1b2);
 }
 
-/* 2-column detail grid */
+/* 2-column detail grid (STRICT minmax(0, ...) prevents mobile blowout) */
 #benchmarks .bm-grid {
   display: grid;
-  grid-template-columns: 1.35fr 1fr;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
   gap: 16px;
 }
 
 #benchmarks .bm-panel {
+  min-width: 0;
+  max-width: 100%;
   padding: 20px;
-  border-radius: 14px;
-  background: var(--panel, rgba(255, 255, 255, 0.025));
-  border: 1px solid var(--line2, rgba(255, 255, 255, 0.09));
+  border-radius: 4px;
+  background: #0a0b0e;
+  border: 1px solid var(--line2, rgba(255, 255, 255, 0.16));
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -152,153 +180,176 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
 #benchmarks .bm-panel-head h3 {
   margin: 0;
-  font-size: 16px;
+  font-size: 15.5px;
   font-weight: 600;
+  color: var(--text, #f2f4f8);
 }
 
 #benchmarks .bm-chip {
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 11px;
-  padding: 4px 9px;
-  border-radius: 999px;
-  background: var(--accent-soft, rgba(167, 139, 250, 0.14));
-  color: var(--accent, #c4b5fd);
-  border: 1px solid rgba(167, 139, 250, 0.25);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 2px;
+  background: var(--panel2, #151820);
+  color: var(--muted, #98a1b2);
+  border: 1px solid var(--line2, rgba(255, 255, 255, 0.16));
 }
 
-/* Comparison table */
+/* Comparison table — safely horizontally scrollable inside its panel */
 #benchmarks .bm-table-wrap {
+  width: 100%;
+  max-width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+  border-radius: 2px;
 }
 
 #benchmarks .bm-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
 }
 
 #benchmarks .bm-table th,
 #benchmarks .bm-table td {
   padding: 10px 10px;
   text-align: right;
-  border-bottom: 1px solid var(--line2, rgba(255, 255, 255, 0.08));
+  border-bottom: 1px solid var(--line, rgba(255, 255, 255, 0.08));
   white-space: nowrap;
+}
+
+#benchmarks .bm-table tbody tr:last-child td {
+  border-bottom: 0;
 }
 
 #benchmarks .bm-table th:first-child,
 #benchmarks .bm-table td:first-child {
   text-align: left;
-  padding-left: 8px;
+  padding-left: 12px;
 }
 
 #benchmarks .bm-table th {
-  font-size: 11px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10.5px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--muted, #9b97b0);
-  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--dim, #626b7c);
+  font-weight: 500;
+  background: var(--bg2, #0b0c10);
 }
 
 #benchmarks .bm-table td {
   font-family: "JetBrains Mono", ui-monospace, monospace;
+  color: var(--muted, #98a1b2);
 }
 
 #benchmarks .bm-table td:first-child {
   font-family: inherit;
   font-weight: 500;
+  color: var(--text, #f2f4f8);
 }
 
 #benchmarks .bm-table tr.is-dywe {
-  background: var(--accent-soft, rgba(167, 139, 250, 0.12));
+  background: rgba(183, 132, 255, 0.08);
+  box-shadow: inset 3px 0 0 var(--accent, #b784ff);
 }
 
 #benchmarks .bm-table tr.is-dywe td {
   color: #ffffff;
   font-weight: 600;
-  border-bottom-color: rgba(167, 139, 250, 0.35);
 }
 
 /* Interactive MEV scenario explorer */
 #benchmarks .bm-desc {
   margin: 0;
   font-size: 13.5px;
-  color: var(--muted, #9b97b0);
+  color: var(--muted, #98a1b2);
   line-height: 1.5;
 }
 
 #benchmarks .bm-scenarios {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
+  gap: 1px;
+  background: var(--line, rgba(255, 255, 255, 0.08));
+  border: 1px solid var(--line2, rgba(255, 255, 255, 0.16));
+  border-radius: 3px;
+  overflow: hidden;
 }
 
 #benchmarks .bm-pill {
   appearance: none;
+  min-width: 0;
   cursor: pointer;
-  padding: 8px 6px;
-  border-radius: 8px;
+  padding: 9px 6px;
+  border: 0;
+  border-radius: 0;
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 12px;
-  color: var(--muted, #9b97b0);
-  background: var(--panel2, rgba(255, 255, 255, 0.04));
-  border: 1px solid var(--line2, rgba(255, 255, 255, 0.1));
-  transition: all 0.16s ease;
+  font-size: 11.5px;
+  color: var(--muted, #98a1b2);
+  background: var(--bg2, #0b0c10);
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 #benchmarks .bm-pill:hover {
-  border-color: var(--accent, #a78bfa);
+  background: var(--panel2, #151820);
   color: #ffffff;
 }
 
 #benchmarks .bm-pill.is-active {
-  background: var(--accent, #a78bfa);
-  border-color: var(--accent, #a78bfa);
-  color: #090710;
+  background: #f2f4f8;
+  color: #070709;
   font-weight: 600;
 }
 
 #benchmarks .bm-delta-card {
   padding: 16px;
-  border-radius: 12px;
-  background: var(--panel2, rgba(255, 255, 255, 0.035));
-  border: 1px solid var(--line2, rgba(255, 255, 255, 0.09));
+  border-radius: 3px;
+  background: var(--bg2, #0b0c10);
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
 }
 
 #benchmarks .bm-delta-row {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 6px 12px;
   margin-bottom: 12px;
 }
 
 #benchmarks .bm-delta-label {
-  font-size: 13px;
-  color: var(--muted, #9b97b0);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  color: var(--muted, #98a1b2);
 }
 
 #benchmarks .bm-delta-num {
   font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 600;
   color: #ffffff;
 }
 
 #benchmarks .bm-delta-num.is-win {
-  color: #4ade80;
+  color: var(--buy, #22c58b);
 }
 
 #benchmarks .bm-meter {
   position: relative;
-  height: 8px;
-  border-radius: 999px;
+  height: 6px;
+  border-radius: 1px;
   background: rgba(255, 255, 255, 0.08);
   overflow: hidden;
   margin-bottom: 12px;
@@ -306,48 +357,96 @@
 
 #benchmarks .bm-meter-fill {
   height: 100%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--accent, #a78bfa), #4ade80);
-  transition: width 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  border-radius: 1px;
+  background: var(--buy, #22c58b);
+  transition: width 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 #benchmarks .bm-delta-verdict {
   margin: 0;
   font-size: 13px;
   line-height: 1.5;
-  color: var(--muted, #b4b0c7);
+  color: var(--muted, #98a1b2);
 }
 
 #benchmarks .bm-footnote {
   margin: auto 0 0;
   font-size: 12px;
   line-height: 1.5;
-  color: var(--dim, #8a869e);
+  color: var(--dim, #626b7c);
 }
 
-/* Responsive */
+/* ---------- Responsive ---------- */
 @media (max-width: 1024px) {
   #benchmarks .bm-kpis {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
   #benchmarks .bm-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
 @media (max-width: 680px) {
+  #benchmarks .bm-head {
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
   #benchmarks .bm-controls {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
+
+  #benchmarks .bm-tab {
+    padding: 12px 14px;
+  }
+
   #benchmarks .bm-kpis {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  #benchmarks .bm-kpi {
+    padding: 14px 12px;
+  }
+
+  #benchmarks .bm-kpi-val {
+    font-size: clamp(16px, 4.4vw, 20px);
+  }
+
+  #benchmarks .bm-panel {
+    padding: 16px 14px;
+  }
+
+  #benchmarks .bm-table th,
+  #benchmarks .bm-table td {
+    padding: 8px 8px;
+    font-size: 12px;
+  }
+
   #benchmarks .bm-scenarios {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  #benchmarks .bm-delta-num {
+    font-size: 19px;
+  }
 }
 
+@media (max-width: 420px) {
+  #benchmarks .bm-kpis {
+    grid-template-columns: minmax(0, 1fr);
+  }
 
+  #benchmarks .bm-kpi {
+    padding: 14px;
+  }
+
+  #benchmarks .bm-kpi-val {
+    font-size: 22px;
+  }
+}
+
+/* ---------- Circle CCTP flow animation ---------- */
 #collateral .cctp-flow path {
   stroke-dasharray: 6 14;
   animation: cctpStream 1.4s linear infinite;
