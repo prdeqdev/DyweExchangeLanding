@@ -1,0 +1,854 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#07060d">
+  <meta name="description" content="Dywe Exchange — neutral non-custodial derivatives clearing CLOB with 50 ms BLS12-381 threshold-encrypted micro-batches and post-decrypt ALO-first ordering.">
+  <title>Dywe Exchange</title>
+  <link rel="icon" type="image/svg+xml" href="images/main-logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/redesign.css">
+  <link rel="stylesheet" href="css/benchmarks.css">
+  <script src="js/config.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/form.js" defer></script>
+  <script src="js/fx.js" defer></script>
+  <script src="js/benchmarks.js" defer></script>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Dywe home">
+      <img src="images/main-logo.svg" alt="Dywe Logo">
+      DYWE
+    </a>
+    <ul>
+      <li><a href="#problem">The Problem</a></li>
+      <li><a href="#how">Technology</a></li>
+      <li><a href="#benchmarks">Benchmarks</a></li>
+      <li><a href="#collateral">Collateral</a></li>
+      <li><a href="#pulse">Pulse &amp; AI</a></li>
+      <li><a href="#copy">Copy-trading</a></li>
+      <li><a href="#who">Who it is for</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
+      <li><a href="#security">Security</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <button class="btn btn-primary btn-sm" data-wl>Request early access</button>
+  </div>
+</header>
+
+<main id="top">
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Non-Custodial Derivatives Infrastructure</p>
+      <h1>Perpetuals without the <em>MEV tax</em>.</h1>
+      <p class="lead">Dywe seals order flow inside 50 ms threshold-encrypted micro-batches and executes post-decrypt ALO-first priority—cutting toxic maker markout by 40% at ~0 bps zero-MEV overhead. Clear native USDC across multiple networks via Circle CCTP with zero bridge risk.</p>
+      <div class="cta-row">
+        <button class="btn btn-primary" data-wl>Request early access</button>
+        <a class="btn btn-ghost" href="#benchmarks">Inspect Rust backtest</a>
+      </div>
+      <div class="hero-meta">
+        <span>&lt;10 ms In-Memory CLOB</span>
+        <span>IBTE (BLS12-381) 50 ms Batches</span>
+        <span>Native Circle CCTP Clearing</span>
+      </div>
+    </div>
+
+    <div class="term" aria-label="Illustration of the Dywe order book and sealed batch">
+      <div class="term-head"><span><b>BTC-PERP</b> &nbsp;Dywe Exchange</span><span class="tag">Illustrative data</span></div>
+      <div class="term-body">
+        <div class="term-col">
+          <div class="col-title"><span>Order book</span><span>Size</span></div>
+          <div id="asks"></div>
+          <div class="ob-mid"><span id="mid">68,240.5</span><small>mark</small></div>
+          <div id="bids"></div>
+        </div>
+        <div class="term-col">
+          <div class="col-title"><span id="batchTitle">Sealed batch #1</span><span>State</span></div>
+          <div id="batch"></div>
+          <div class="shares" id="shares"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="shares-label"><span id="shareLbl">0 of 7 key shares</span><span>5 needed</span></div>
+        </div>
+      </div>
+      <div class="term-foot">Orders unlock in memory after 50 ms commit, then execute New (ALO) → Cancel → Taker.</div>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="wrap">
+    <span class="label">Built on</span>
+    <ul>
+      <li>Arbitrum Orbit &amp; Stylus</li>
+      <li>Celestia DA</li>
+      <li>Circle CCTP</li>
+      <li>Threshold IBTE (BLS12-381)</li>
+    </ul>
+    <span class="label">Open-source Rust L1 backtest · Tier-1 audits prior to mainnet</span>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="wrap">
+    <p class="eyebrow">The problem</p>
+    <h2 class="h2">On-chain perps leak value before the trade even fills.</h2>
+    <p class="lead">Transparent mempools expose resting quotes to stale-quote sniping and large directional flow to MEV. Market makers widen spreads to survive, and every trader downstream pays the cost.</p>
+    <div class="grid3">
+      <div class="card">
+        <div class="stat">40–50%<small>of maker edge</small></div>
+        <h3>Adverse Selection &amp; MEV</h3>
+        <p>On transparent CLOBs, latency bots snipe stale market maker quotes during external price moves and sandwich large directional orders (≥$50k)—forcing makers to widen equilibrium spreads and taxing natural-flow traders.</p>
+      </div>
+      <div class="card">
+        <div class="stat">$2.8B+<small>in bridge exploits</small></div>
+        <h3>The Custom Bridge Trap</h3>
+        <p>Locking collateral into isolated single-chain bridges fragments liquidity and exposes capital to third-party bridge exploits—a structural compliance blocker for institutional desks.</p>
+      </div>
+      <div class="card">
+        <div class="stat">1 chart<small>and nothing else</small></div>
+        <h3>The "Bare Chart" Vacuum</h3>
+        <p>Legacy DEX terminals offer only basic candlestick charts with zero order-book microstructure telemetry and no native, non-custodial infrastructure for automated strategy mirroring.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IBTE / ARCHITECTURE -->
+<section id="how" class="band">
+  <div class="wrap">
+    <p class="eyebrow">Threshold IBTE &amp; Micro-Batching</p>
+    <h2 class="h2">Orders stay sealed until the batch commits.</h2>
+    <p class="lead">Direction, size, and limit price are encrypted client-side with BLS12-381. Sequencers and validators cannot inspect in-flight payloads, eliminating front-running and sandwich MEV while preserving post-decrypt maker priority.</p>
+
+    <div class="pipe">
+      <div class="step">
+        <div class="n">1 &nbsp;Encrypt</div>
+        <h3>Sealed on your device</h3>
+        <p>The terminal encrypts order parameters locally with a BLS12-381 threshold key before the packet ever leaves your browser.</p>
+        <span class="k">Client-side IBTE</span>
+      </div>
+      <div class="step">
+        <div class="n">2 &nbsp;Commit</div>
+        <h3>50 ms micro-batch lock</h3>
+        <p>Encrypted payloads commit inside a 50 ms batch window while cancel headers stay plaintext—no directional intent leaks pre-commit.</p>
+        <span class="k">50 ms batch commit</span>
+      </div>
+      <div class="step">
+        <div class="n">3 &nbsp;Decrypt</div>
+        <h3>Distributed threshold unlock</h3>
+        <p>A 5-of-7 validator quorum decrypts the committed batch in matching-engine memory in a single round strictly after sequence lock.</p>
+        <span class="k">~35 ms in memory</span>
+      </div>
+      <div class="step">
+        <div class="n">4 &nbsp;Match</div>
+        <h3>Post-decrypt ALO-first CLOB</h3>
+        <p>Compiled native Rust on Arbitrum Stylus executes New (ALO) → Cancel → Taker in resident memory with 0.0% dropped taker volume.</p>
+        <span class="k">&lt;10 ms · 0.0% drops</span>
+      </div>
+    </div>
+
+    <div class="lat">
+      <div>
+        <h3>Latency budget</h3>
+        <p>Architectural execution benchmarks across the pipeline, drawn to scale.</p>
+      </div>
+      <div class="bars" id="bars">
+        <div class="bar-row" style="--w:8.7%"><span>Matching core</span><div class="t"><i></i></div><b>&lt;10 ms</b></div>
+        <div class="bar-row" style="--w:30.4%"><span>Threshold decrypt</span><div class="t"><i></i></div><b>~35 ms</b></div>
+        <div class="bar-row" style="--w:100%"><span>Tick-to-trade</span><div class="t"><i></i></div><b>85–115 ms</b></div>
+      </div>
+    </div>
+    <p class="note">Architectural latency benchmarks for the production L3 pipeline (50 ms batch + ~35 ms threshold decrypt + &lt;10 ms in-memory matching).</p>
+  </div>
+</section>
+
+<!-- OPEN-SOURCE BENCHMARKS (v0.3.3) -->
+<section id="benchmarks">
+  <div class="wrap">
+    <div class="bm-head">
+      <div>
+        <p class="eyebrow">Open-Source Microstructure Backtest · v0.3.3</p>
+        <h2 class="h2">Verified on 30 pair-days of Binance Futures &amp; Native L1 data.</h2>
+        <p class="lead">Deterministic fixed-point (<code>i64</code>/<code>i128</code>) Rust causal replay across $247.5B in historical volume comparing Continuous FIFO, 70 ms Open Priority Batches, 100 ms FBA, and Dywe 50 ms IBTE.</p>
+      </div>
+      <div class="bm-actions">
+        <a class="btn btn-primary btn-sm" href="https://github.com/prdeqdev/DyweRustMicrostructuralAblationBacktest" target="_blank" rel="noopener noreferrer">View GitHub Repo ↗</a>
+        <span class="bm-badge">14/14 invariant tests · 95% block bootstrap CI</span>
+      </div>
+    </div>
+
+    <div class="bm-controls" role="tablist" aria-label="Backtest dataset selector">
+      <button class="bm-tab is-active" type="button" role="tab" aria-selected="true" data-bm-ds="l1">
+        <strong>Native L1 <code>bookTicker</code></strong>
+        <span>BTC+ETH+SOL · 9 pair-days · $64.4B</span>
+      </button>
+      <button class="bm-tab" type="button" role="tab" aria-selected="false" data-bm-ds="primary">
+        <strong>Primary <code>BTC+ETH</code></strong>
+        <span>14 pair-days · $168.2B · Bid/Ask proxy</span>
+      </button>
+      <button class="bm-tab" type="button" role="tab" aria-selected="false" data-bm-ds="sol">
+        <strong>Altcoin <code>SOLUSDT</code></strong>
+        <span>7 pair-days · $15.1B · Thin book</span>
+      </button>
+    </div>
+
+    <div class="bm-kpis" id="bmKpis" aria-live="polite">
+      <article class="bm-kpi">
+        <span class="bm-kpi-label">1s Toxic MM Markout vs. FIFO</span>
+        <strong class="bm-kpi-val is-good" data-bm-field="markoutDelta">−40.4%</strong>
+        <p class="bm-kpi-sub" data-bm-field="markoutSub">−0.782 vs. −1.312 bp · −87.1% stale sniping</p>
+      </article>
+      <article class="bm-kpi">
+        <span class="bm-kpi-label">Dropped Taker Volume (USD%)</span>
+        <strong class="bm-kpi-val" data-bm-field="droppedVol">0.0%</strong>
+        <p class="bm-kpi-sub" data-bm-field="droppedSub">Post-decrypt New (ALO) → Cancel → Taker</p>
+      </article>
+      <article class="bm-kpi">
+        <span class="bm-kpi-label">Zero-MEV Cost vs. 70 ms Open Batch</span>
+        <strong class="bm-kpi-val" data-bm-field="zeroMev">+0.005 bp</strong>
+        <p class="bm-kpi-sub" data-bm-field="zeroMevSub">Negligible encryption overhead (SOL L1: −0.014 bp)</p>
+      </article>
+      <article class="bm-kpi">
+        <span class="bm-kpi-label">Taker All-In Savings Under MEV</span>
+        <strong class="bm-kpi-val is-accent" data-bm-field="mevSavings">−22.3% to −48.2%</strong>
+        <p class="bm-kpi-sub" data-bm-field="mevSavingsSub">25%–50% capture / 1.0 bp · Breakeven at 10% / 0.5 bp</p>
+      </article>
+    </div>
+
+    <div class="bm-grid">
+      <div class="bm-panel">
+        <div class="bm-panel-head">
+          <h3>Regime Comparison (MEV = 0, Single-Denominator All-In)</h3>
+          <span class="bm-chip" data-bm-field="datasetBadge">Native L1 · Mar 2024</span>
+        </div>
+        <div class="bm-table-wrap">
+          <table class="bm-table">
+            <thead>
+              <tr>
+                <th>Regime</th>
+                <th>1s MM Markout</th>
+                <th>Half-Spread s*net</th>
+                <th>All-In Net</th>
+                <th>Dropped USD</th>
+              </tr>
+            </thead>
+            <tbody id="bmTableBody">
+              <tr>
+                <td>A: Continuous FIFO</td>
+                <td>−1.312 bp</td>
+                <td>1.112 bp</td>
+                <td>0.670 bp</td>
+                <td>0.0%</td>
+              </tr>
+              <tr>
+                <td>B: Open Batch 70 ms (hl)</td>
+                <td>−0.667 bp</td>
+                <td>0.467 bp</td>
+                <td>0.651 bp</td>
+                <td>0.0%</td>
+              </tr>
+              <tr>
+                <td>C: Uniform FBA 100 ms</td>
+                <td>−0.622 bp</td>
+                <td>0.422 bp</td>
+                <td>0.671 bp</td>
+                <td>0.0%</td>
+              </tr>
+              <tr class="is-dywe">
+                <td>D: Dywe IBTE 50 ms (35 ms dec)</td>
+                <td>−0.782 bp</td>
+                <td>0.582 bp</td>
+                <td>0.656 bp</td>
+                <td>0.0%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="bm-footnote" data-bm-field="placeboNote">Circular-shift placebo control (600 s): 97.3% of Regime A 1s markout and 95.8% of the B − A cancel-priority gap vanish, confirming genuine causal adverse selection.</p>
+      </div>
+
+      <div class="bm-panel">
+        <div class="bm-panel-head">
+          <h3>Break-Even vs. 70 ms Open Batch (D − B)</h3>
+          <span class="bm-chip">Parameterized MEV Grid</span>
+        </div>
+        <p class="bm-desc">Delta in total taker All-In Net cost (bps) for large orders ≥$50k (negative values mean Dywe is strictly cheaper at 95% CI).</p>
+        <div class="bm-scenarios" id="bmScenarios" role="group" aria-label="MEV scenario selector">
+          <button class="bm-pill is-active" type="button" data-bm-sc="zero">MEV = 0%</button>
+          <button class="bm-pill" type="button" data-bm-sc="breakeven">10% / 0.5 bp</button>
+          <button class="bm-pill" type="button" data-bm-sc="mid">25% / 1.0 bp</button>
+          <button class="bm-pill" type="button" data-bm-sc="high">50% / 1.0 bp</button>
+        </div>
+        <div class="bm-delta-card">
+          <div class="bm-delta-row">
+            <span class="bm-delta-label" data-bm-field="scLabel">Sterile Zero-MEV Baseline</span>
+            <strong class="bm-delta-num" data-bm-field="scDelta">+0.005 bp</strong>
+          </div>
+          <div class="bm-meter" aria-hidden="true">
+            <div class="bm-meter-zero"></div>
+            <div class="bm-meter-fill" id="bmMeterFill" style="width:4%"></div>
+          </div>
+          <p class="bm-delta-verdict" data-bm-field="scVerdict">Virtually identical execution cost to a 70 ms open priority batch even when zero MEV occurs, with 10% conservative cancel-header leakage modeled.</p>
+        </div>
+        <p class="bm-footnote">Counterfactual MEV rows (&gt;0% capture) use parameterized impact grids (50% MM share, +0.50 bp rebate, 0.30 bp OpEx). Full CSV grids and HTML charts are published in <code>results/</code>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NUMBERS -->
+<section style="padding-block:clamp(40px,6vw,72px)">
+  <div class="wrap">
+    <div class="nums">
+      <div class="num"><b>&lt;10 ms</b><span>In-memory matching core</span></div>
+      <div class="num"><b>−40.4%</b><span>Toxic 1s MM markout vs. FIFO (L1)</span></div>
+      <div class="num"><b>0.0%</b><span>Dropped USD volume (ALO-first)</span></div>
+      <div class="num"><b>&lt;2 s</b><span>Universal Multi-Chain Soft-Credit</span></div>
+      <div class="num"><b>−0.005%</b><span>SLA Maker rebate, 0.020% Taker</span></div>
+    </div>
+    <p class="note">Production architectural specifications, baseline fee schedule, and Native L1 backtest outputs (v0.3.3).</p>
+  </div>
+</section>
+
+<!-- COLLATERAL -->
+<section id="collateral" class="band">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">Collateral Abstraction</p>
+      <h2 class="h2">Deposit native USDC from where it already sits.</h2>
+      <p class="lead">Canonical Circle CCTP burns USDC on your source network and mints it directly into one unified margin vault. Zero wrapped tokens, zero third-party bridge risk.</p>
+      <ul class="points">
+        <li><span><b>Five core networks at launch.</b> Arbitrum, Base, Solana, Ethereum, and BNB Chain (BSC), built on an open adapter model scaling to 20+ chains.</span></li>
+        <li><span><b>Start trading in under two seconds.</b> Universal Soft-Credit grants instant trading power as soon as your source-chain deposit is verified, without waiting for slow cross-chain finality.</span></li>
+        <li><span><b>Protected by dedicated liquidity reserves.</b> Instant cross-chain pre-crediting is backed by isolated protocol liquidity buffers and a dedicated SAFU insurance reserve.</span></li>
+      </ul>
+    </div>
+    <div class="diagram">
+      <svg viewBox="0 0 600 340" role="img" aria-label="Native USDC from four chains flows into one ClearingHouse vault">
+        <!-- Статичные базовые линии -->
+        <g fill="none" stroke="var(--line2)" stroke-width="1.5">
+          <path d="M150 54 C 300 54, 300 162, 420 162"/>
+          <path d="M150 126 C 300 126, 300 162, 420 162"/>
+          <path d="M150 198 C 300 198, 300 162, 420 162"/>
+          <path d="M150 270 C 300 270, 300 162, 420 162"/>
+        </g>
+
+        <!-- Анимированные потоки (перетекание в Vault) -->
+        <g class="cctp-flow" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round">
+          <path d="M150 54 C 300 54, 300 162, 420 162"/>
+          <path d="M150 126 C 300 126, 300 162, 420 162"/>
+          <path d="M150 198 C 300 198, 300 162, 420 162"/>
+          <path d="M150 270 C 300 270, 300 162, 420 162"/>
+        </g>
+
+        <!-- 4 сети Circle CCTP -->
+        <g>
+          <rect x="10" y="36" width="140" height="36" rx="8" fill="var(--panel2)" stroke="var(--line2)"/><text class="strong" x="26" y="59">Arbitrum</text>
+          <rect x="10" y="108" width="140" height="36" rx="8" fill="var(--panel2)" stroke="var(--line2)"/><text class="strong" x="26" y="131">Base</text>
+          <rect x="10" y="180" width="140" height="36" rx="8" fill="var(--panel2)" stroke="var(--line2)"/><text class="strong" x="26" y="203">Solana</text>
+          <rect x="10" y="252" width="140" height="36" rx="8" fill="var(--panel2)" stroke="var(--line2)"/><text class="strong" x="26" y="275">Ethereum</text>
+        </g>
+
+        <!-- Единый Vault -->
+        <rect x="420" y="102" width="170" height="120" rx="12" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.5"/>
+        <text class="strong" x="440" y="138">ClearingHouse</text>
+        <text class="strong" x="440" y="156">Vault</text>
+        <text class="small" x="440" y="182">unified margin account</text>
+        <text class="small" x="440" y="198">native Circle USDC</text>
+        <text class="small" x="152" y="324">+ 15 more chains through open CCTP adapters</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- PULSE & AI -->
+<section id="pulse">
+  <div class="wrap">
+    <p class="eyebrow">Dywe Pulse &amp; Dywe AI</p>
+    <h2 class="h2">Institutional order-book telemetry built into the terminal.</h2>
+    <p class="lead">Market microstructure streams directly from matching engine memory in under 100 ms, exposing forced-flow pockets before they trigger.</p>
+
+    <div class="tabs" role="tablist" aria-label="Pulse and AI tools">
+      <button class="tab" role="tab" aria-selected="true" aria-controls="p1" id="t1">Liquidation Walls</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p2" id="t2" tabindex="-1">Whale Delta &amp; Funding</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p3" id="t3" tabindex="-1">AI Risk Copilot</button>
+      <button class="tab tab-soon" role="tab" aria-selected="false" aria-controls="p4" id="t4" tabindex="-1">More <span aria-hidden="true">▒▒▒</span></button>
+    </div>
+
+    <div class="panel on" id="p1" role="tabpanel" aria-labelledby="t1">
+      <div>
+        <h3>See the liquidation cascade before it triggers.</h3>
+        <p>Aggregated stop clusters, high-leverage pockets, and cascade risk zones mapped across price buckets and refreshed in under 100 ms. Position around institutional liquidity pockets with full book context.</p>
+        <ul class="points"><li><span><b>Direct in-memory telemetry</b> streams live order-book state with zero latency impact on trade execution.</span></li><li><span><b>Real-time spoofing and iceberg detection</b> alongside Cumulative Volume Delta (CVD) and bid/ask skews.</span></li></ul>
+      </div>
+      <div class="viz">
+        <div class="viz-title"><span>Liquidation density</span><span>Illustrative</span></div>
+        <div class="wall s"><span>69,400</span><div class="t"><i style="width:34%"></i></div><b>$12M</b></div>
+        <div class="wall s"><span>69,000</span><div class="t"><i style="width:71%"></i></div><b>$26M</b></div>
+        <div class="wall s"><span>68,600</span><div class="t"><i style="width:48%"></i></div><b>$17M</b></div>
+        <div class="wall px"><span>Mark 68,240</span><b>●</b></div>
+        <div class="wall l"><span>67,900</span><div class="t"><i style="width:39%"></i></div><b>$14M</b></div>
+        <div class="wall l"><span>67,500</span><div class="t"><i style="width:92%"></i></div><b>$33M</b></div>
+        <div class="wall l"><span>67,000</span><div class="t"><i style="width:57%"></i></div><b>$20M</b></div>
+      </div>
+    </div>
+
+    <div class="panel" id="p2" role="tabpanel" aria-labelledby="t2" hidden>
+      <div>
+        <h3>Track institutional net delta, not retail noise.</h3>
+        <p>Monitor net whale flow, resting limit walls, and open-interest imbalances in a single view, paired with a cross-venue funding heatmap engineered for basis and carry arbitrage.</p>
+        <ul class="points"><li><span><b>Smart Money &amp; Whale Delta</b> isolates aggressive institutional accumulation from passive flow.</span></li><li><span><b>Interactive Funding Heatmaps</b> pinpoint extreme OI skews across perpetual markets.</span></li></ul>
+      </div>
+      <div class="viz">
+        <div class="viz-title"><span>Net delta, 1h</span><span>Illustrative</span></div>
+        <div class="delta"><span class="who">Large wallets, BTC</span><span class="pos">+$41.2M</span><span class="mono" style="color:var(--dim)">OI skew 54/46</span></div>
+        <div class="delta"><span class="who">Large wallets, ETH</span><span class="neg">−$12.8M</span><span class="mono" style="color:var(--dim)">OI skew 47/53</span></div>
+        <div class="delta"><span class="who">Large wallets, SOL</span><span class="pos">+$6.3M</span><span class="mono" style="color:var(--dim)">OI skew 51/49</span></div>
+        <div class="delta"><span class="who">Funding, BTC (8h)</span><span class="pos">+0.011%</span><span class="mono" style="color:var(--dim)">vs venue avg +0.007%</span></div>
+        <div class="delta"><span class="who">Funding, ETH (8h)</span><span class="neg">−0.004%</span><span class="mono" style="color:var(--dim)">vs venue avg +0.005%</span></div>
+      </div>
+    </div>
+
+    <div class="panel" id="p3" role="tabpanel" aria-labelledby="t3" hidden>
+      <div>
+        <h3>Describe a thesis in plain language. Execute it with deterministic rules.</h3>
+        <p>Dywe AI evaluates portfolio margin risk, calculates safe leverage bounds, and translates natural-language rules into verifiable, deterministic execution logic—ensuring complete reliability during live market volatility.</p>
+        <ul class="points"><li><span><b>Instant historical tick backtesting</b> against order-book matching data with zero coding required.</span></li><li><span><b>Multi-channel smart alerts</b> dispatched via WebSocket, Telegram, and custom webhooks.</span></li></ul>
+      </div>
+      <div class="viz">
+        <div class="viz-title"><span>Deterministic Strategy Builder</span><span>Illustrative</span></div>
+        <div class="chat">
+          <div class="bubble me">Go long ETH with 3% of equity when funding turns negative. Stop out at 2% loss.</div>
+          <div class="code"><span class="k">WHEN</span> funding(<span class="v">ETH-PERP</span>) &lt; <span class="v">0</span>
+<span class="k">THEN</span> open_long(<span class="v">ETH-PERP</span>, size=<span class="v">3%</span> equity, lev=<span class="v">3x</span>)
+<span class="k">GUARD</span> stop_loss(<span class="v">2%</span>), max_leverage(<span class="v">10x</span>)
+<span class="k">ALERT</span> telegram, webhook</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="p4" role="tabpanel" aria-labelledby="t4" hidden>
+      <div>
+        <h3>Expanding the native analytical suite.</h3>
+        <p>Dywe Pulse and the AI Risk Copilot are the foundation. Additional quantitative execution and microstructure tools are in active development around the matching engine.</p>
+        <div class="cta-row" style="margin-top:24px"><button class="btn btn-ghost btn-sm" data-wl data-role="trader">Get notified</button></div>
+      </div>
+      <div class="viz">
+        <div class="viz-title"><span>Upcoming modules</span><span>Locked</span></div>
+        <div class="lock-row"><i style="width:62%"></i><span>▒▒▒▒▒▒▒▒ ▒▒▒▒▒▒</span></div>
+        <div class="lock-row"><i style="width:44%"></i><span>▒▒▒▒▒ ▒▒▒▒▒▒▒▒▒▒</span></div>
+        <div class="lock-row"><i style="width:78%"></i><span>▒▒▒▒▒▒▒ ▒▒▒▒</span></div>
+        <div class="lock-row"><i style="width:52%"></i><span>▒▒▒▒▒▒▒▒▒▒▒▒▒</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COPY TRADING -->
+<section id="copy" class="band">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">Copy-Trading &amp; Strategy Marketplace</p>
+      <h2 class="h2">Mirror top quant strategies. Never surrender custody.</h2>
+      <p class="lead">Experienced traders and quant desks deploy autonomous on-chain smart vaults in one click. Followers allocate native USDC directly into audited smart contracts while retaining full withdrawal control.</p>
+      <ul class="points">
+        <li><span><b>Scoped trading permissions.</b> Vault managers execute trades under hard leverage caps and automated drawdown stop-outs, with zero withdrawal access to follower principal.</span></li>
+        <li><span><b>Atomic execution inside sealed IBTE batches</b> shields large vault rebalances (≥$50k) from front-running by external MEV searchers or vault leaders.</span></li>
+        <li><span><b>Three creator monetization streams.</b> Private pool gate fees, recurring monthly subscriptions, and automated 10–20% High-Water Mark performance fees.</span></li>
+      </ul>
+      <div class="cta-row"><button class="btn btn-primary" data-wl data-role="trader">Request early access</button></div>
+    </div>
+    <div class="viz">
+      <div class="viz-title"><span>Non-Custodial Smart Vaults</span><span>Illustrative</span></div>
+      <div class="vault"><span class="nm">Funding-flip ETH</span><span class="r pos">+18.4% 90d</span><span class="sub">Manager fee 15% HWM · 3x max</span></div>
+      <div class="vault"><span class="nm">Basis carry BTC</span><span class="r pos">+9.1% 90d</span><span class="sub">Manager fee 10% HWM · 2x max</span></div>
+      <div class="vault"><span class="nm">Range scalper SOL</span><span class="r neg">−3.2% 90d</span><span class="sub">Subscription $29/mo · 5x max</span></div>
+      <div class="vault"><span class="nm">Macro swing, private</span><span class="r mono" style="color:var(--muted)">Gate fee</span><span class="sub">Invite pool · 4x max</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCES -->
+<section id="who">
+  <div class="wrap">
+    <p class="eyebrow">Who it is for</p>
+    <h2 class="h2">One clearinghouse. Three execution profiles.</h2>
+    <div class="aud-grid">
+      <article class="aud">
+        <span class="for">Active Traders</span>
+        <h3>MEV-shielded execution</h3>
+        <ul>
+          <li><b>0.020% taker fees</b> with −22% to −48% lower All-In cost under MEV vs. open CLOBs.</li>
+          <li><b>Dywe Pulse &amp; AI</b> embedded directly in the order book.</li>
+          <li><b>1-click copy-trading</b> in non-custodial ERC-4626 smart vaults.</li>
+          <li><b>&lt;2s Universal Soft-Credit</b> across 5+ chains via Circle CCTP.</li>
+        </ul>
+        <button class="btn btn-ghost" data-wl data-role="trader">Join as a trader</button>
+      </article>
+      <article class="aud">
+        <span class="for">Market Makers</span>
+        <h3>Quote size without adverse-selection leakage</h3>
+        <ul>
+          <li><b>Threshold-sealed flow (IBTE)</b> prevents mempool front-running and sandwich MEV.</li>
+          <li><b>Post-decrypt ALO → Cancel → Taker</b> eliminates dead-gap drops (0.0% dropped volume).</li>
+          <li><b>−40.4% toxic 1s markout</b> and <b>−87.1% stale sniping</b> vs. FIFO on Native L1 data.</li>
+          <li><b>−0.005% maker rebate</b> on a 100% neutral venue with zero house HLP pool.</li>
+        </ul>
+        <button class="btn btn-ghost" data-wl data-role="market-maker">Join as a market maker</button>
+      </article>
+      <article class="aud">
+        <span class="for">Institutions &amp; Desks</span>
+        <h3>Prime-broker grade settlement</h3>
+        <ul>
+          <li><b>Pre-trade privacy</b> for large blocks (≥$50k) at +0.005 bps zero-MEV overhead (L1).</li>
+          <li><b>FIX 4.4 gateways</b> and 1.35x–1.45x portfolio cross-margin on Phase 2 L1.</li>
+          <li><b>Canonical Circle USDC clearing</b> with zero custom bridge exposure.</li>
+          <li><b>Tier-1 security audits</b> and on-chain parameter timelocks.</li>
+        </ul>
+        <button class="btn btn-ghost" data-wl data-role="institution">Institutional onboarding</button>
+      </article>
+    </div>
+    <div class="build">
+      <p><b>Building a non-custodial wallet, trading terminal, Telegram bot or any product?</b> Our zero-bond Volume-Gated SDK unlocks elevated API quotas automatically as your volume scales.</p>
+      <button class="btn btn-ghost btn-sm" data-wl data-role="builder">Apply as a builder</button>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section id="advantage" class="band">
+  <div class="wrap">
+    <p class="eyebrow">Architectural Advantage</p>
+    <h2 class="h2">Same market. Fundamentally better microstructure.</h2>
+    <div class="vs">
+      <div class="vs-h"><span>Transparent On-Chain Perp DEXs</span><span class="us">Dywe Exchange</span></div>
+      <div class="vs-r"><p>Open mempools expose resting quotes to stale-quote sniping and large sweeps (≥$50k) to sandwich MEV.</p><b aria-hidden="true">→</b><p>50 ms IBTE (BLS12-381) + post-decrypt ALO-first priority: −40.4% toxic markout at +0.005 bps zero-MEV overhead.</p></div>
+      <div class="vs-r"><p>Collateral locked in custom single-chain bridges with long finality delays.</p><b aria-hidden="true">→</b><p>Canonical Circle CCTP across 5+ chains with &lt;2s Universal Soft-Credit.</p></div>
+      <div class="vs-r"><p>Internal house pools monetize transparent order flow and open liquidation mechanics.</p><b aria-hidden="true">→</b><p>100% neutral Peer-to-Peer zero-sum CLOB clearing backed by native USDC.</p></div>
+      <div class="vs-r"><p>Bare candlestick charts requiring paid third-party SaaS terminals.</p><b aria-hidden="true">→</b><p>Embedded Dywe Pulse (&lt;100 ms live telemetry), AI Copilot &amp; non-custodial vaults.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="wrap">
+    <p class="eyebrow">Scaling Roadmap</p>
+    <h2 class="h2">Launch on Arbitrum Orbit L3. Scale to a decoupled Sovereign L1.</h2>
+    <p class="lead">Open positions migrate seamlessly between phases via a cryptographic State Snapshot Sync and a pre-open Call Auction—with zero forced liquidations.</p>
+    <div class="road">
+      <div class="ph now">
+        <div class="when"><span>Phase 1</span><span>Now</span></div>
+        <h3>Arbitrum Orbit L3 Launch</h3>
+        <ul>
+          <li>In-memory Stylus Rust CLOB (&lt;10 ms) &amp; Threshold IBTE (BLS12-381)</li>
+          <li>10–20 liquid pairs settled in native USDC</li>
+          <li>Circle CCTP across 5 chains + &lt;2s Soft-Credit</li>
+          <li>Dywe Pulse, AI Copilot &amp; Copy-Trading vaults</li>
+          <li>Tier-1 security audits prior to public mainnet</li>
+        </ul>
+      </div>
+      <div class="ph">
+        <div class="when"><span>Phase 2</span><span>Next</span></div>
+        <h3>Sovereign L1: Dywe Exchange + Dywe EVM</h3>
+        <ul>
+          <li>High-speed pure Rust L1 (&lt;1.0s deterministic finality)</li>
+          <li>Dedicated Dywe Exchange core decoupled from open Dywe EVM</li>
+          <li>Institutional FIX 4.4 gateways &amp; 1.45x portfolio margin</li>
+          <li>Ecosystem expansion</li>
+        </ul>
+      </div>
+      <div class="ph">
+        <div class="when"><span>Phase 3</span><span>Scale</span></div>
+        <h3>Global Clearing Ecosystem</h3>
+        <ul>
+          <li>External DeFi, RWA &amp; SocialFi dApps building on Dywe EVM</li>
+          <li>Prime broker &amp; institutional asset manager connectivity</li>
+          <li>Open Circle CCTP adapter expansion to 20+ chains</li>
+          <li>100,000+ OPS matching throughput at global scale</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section id="security" class="band">
+  <div class="wrap split sec-split">
+    <div class="stage">
+      <div class="v3d" role="img" aria-label="Six stacked layers above the funds">
+        <div class="stack" id="bStack"></div>
+      </div>
+      <p class="cap" id="cap"></p>
+    </div>
+    <div>
+      <p class="eyebrow">Security Architecture</p>
+      <h2 class="h2">Six layers of cryptographic and risk isolation.</h2>
+      <ol class="layers" id="layers">
+        <li data-i="0" tabindex="0">
+          <span class="ln">1</span>
+          <div>
+            <h3>Tier-1 Security Audits &amp; On-Chain Timelocks</h3>
+            <div class="more">
+              <p>The Rust matching engine, threshold cryptography, and clearing vaults undergo independent tier-1 audits prior to mainnet. Core risk parameter updates are governed by a multi-sig Security Council and mandatory on-chain timelocks.</p>
+            </div>
+          </div>
+        </li>
+        <li data-i="1" tabindex="0">
+          <span class="ln">2</span>
+          <div>
+            <h3>Threshold IBTE (BLS12-381) &amp; Cryptographic Slashing</h3>
+            <div class="more">
+              <p>Order payloads are sealed client-side and unlocked in memory by a 5-of-7 node quorum only after 50 ms batch sequencing is committed, enforced by cryptographic fraud proofs and validator bond slashing.</p>
+            </div>
+          </div>
+        </li>
+        <li data-i="2" tabindex="0">
+          <span class="ln">3</span>
+          <div>
+            <h3>Multi-Source Oracle Guards &amp; Price Collars</h3>
+            <div class="more">
+              <p>A composite price feed across institutional oracles and top spot venues filters out manipulation spikes in real time, while automated price collars transition extreme volatility into a protective Call Auction.</p>
+            </div>
+          </div>
+        </li>
+        <li data-i="3" tabindex="0">
+          <span class="ln">4</span>
+          <div>
+            <h3>Tiered Partial Liquidations &amp; Zero-Sum Clearing</h3>
+            <div class="more">
+              <p>Every long contract is matched peer-to-peer against a funded short in native USDC. Margin breaches trigger a grace window followed by incremental partial liquidations—preserving trader equity against flash wicks.</p>
+            </div>
+          </div>
+        </li>
+        <li data-i="4" tabindex="0">
+          <span class="ln">5</span>
+          <div>
+            <h3>SAFU Insurance Waterfall &amp; Reserve Backing</h3>
+            <div class="more">
+              <p>A dedicated SAFU reserve—capitalized at launch and continuously replenished by protocol fee revenue—absorbs extreme market gap slippage and backs instant cross-chain Soft-Credit.</p>
+            </div>
+          </div>
+        </li>
+        <li data-i="5" tabindex="0">
+          <span class="ln">6</span>
+          <div>
+            <h3>Non-Custodial Vaults &amp; Scoped Permissions</h3>
+            <div class="more">
+              <p>Collateral remains in auditable on-chain clearing contracts. Ephemeral session keys and copy-trading managers can execute trades within strict risk bounds, but hold zero withdrawal privileges.</p>
+            </div>
+          </div>
+        </li>
+      </ol>
+      <div class="detail" id="detail" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="band">
+  <div class="wrap">
+    <p class="eyebrow">FAQ</p>
+    <h2 class="h2">Frequently asked questions.</h2>
+    <div class="faq">
+      <details open>
+        <summary>How do encrypted micro-batches reduce adverse selection and MEV?</summary>
+        <p>On transparent CLOBs, latency bots snipe stale market maker quotes during external price moves and sandwich large directional orders (≥$50k) in the mempool—forcing makers to widen spreads. Dywe encrypts order parameters client-side via BLS12-381 threshold encryption (IBTE) inside 50 ms micro-batches, decrypts in matching-engine memory (~35 ms), and executes New (ALO) → Cancel → Taker priority before fills clear. In our open-source Rust backtest across Native L1 Binance Futures data, this cuts 1s toxic MM markout by 40.4% vs. FIFO (−87.1% stale sniping) with 0.0% dropped volume and only +0.005 bps overhead at zero MEV, while cutting taker All-In costs by 22%–48% when MEV is present.</p>
+      </details>
+
+      <details>
+        <summary>Who holds custody of my collateral?</summary>
+        <p>You always maintain sovereign control. All native USDC deposits reside in audited, non-custodial smart contracts. Neither the exchange sequencer, nor copy-trading vault operators, nor any automated system has withdrawal permissions over your principal.</p>
+      </details>
+
+      <details>
+        <summary>Do I have to sign a wallet popup for every single order?</summary>
+        <p>No. Dywe uses scoped ephemeral session keys (EIP-4337). You sign once when opening a trading session, granting the client terminal local, temporary permission strictly to place and cancel orders in the order book. Session keys hold zero withdrawal privileges, giving you seamless 1-click execution at CEX speed without sacrificing non-custodial security.</p>
+      </details>
+
+      <details>
+        <summary>How does Universal Multi-Chain Soft-Credit (&lt;2s) work?</summary>
+        <p>Traditional cross-chain transfers can take minutes to finalize. With Dywe, as soon as your native Circle CCTP deposit burn is verified on the source network, the protocol instantly credits a Trade-Only balance backed by dedicated liquidity reserves. You can start trading on 10–20 liquid pairs in under 2 seconds, while background canonical attestation finalizes.</p>
+      </details>
+
+      <details>
+        <summary>Which networks can I deposit from?</summary>
+        <p>At launch, native USDC deposits clear directly across Arbitrum, Base, Solana, Ethereum, and BNB Chain (BSC) via official Circle CCTP burn-and-mint mechanics. Our modular adapter architecture is designed to expand across 20+ additional chains without wrapped tokens or synthetic bridges.</p>
+      </details>
+
+      <details>
+        <summary>What is the fee schedule?</summary>
+        <p>Dywe operates on a transparent exchange fee tier: standard taker fees are just 0.020% (2 bps), while qualifying institutional market makers receive a negative maker rebate of −0.005% under dedicated SLAs. There are zero hidden borrow fees or synthetic swap penalties.</p>
+      </details>
+
+      <details>
+        <summary>How do liquidations work, and am I protected from flash wicks?</summary>
+        <p>The protocol enforces multi-layered risk guards: a median oracle filter rejects outlier price manipulation spikes in real time. If margin thresholds are breached, positions enter a 15-second grace period followed by partial liquidations in 25% tranches—protecting the remaining 75% of your position rather than wiping out your entire equity at once. Extreme market gap risks are further absorbed by the protocol's dedicated SAFU insurance fund.</p>
+      </details>
+
+      <details>
+        <summary>How does non-custodial copy-trading work?</summary>
+        <p>Experienced quant desks and verified traders deploy autonomous ERC-4626 smart vaults. Followers deposit native USDC directly into the vault smart contract. Vault leaders receive a restricted trading-only role (max 10x leverage, hard drawdown circuit-breakers) and can never withdraw follower assets. Leader orders execute atomically within sealed IBTE batches, guaranteeing followers are never front-run.</p>
+      </details>
+
+      <details>
+        <summary>How do developer integrations and the Builder SDK work?</summary>
+        <p>Developers building non-custodial wallets, custom trading interfaces, or algorithmic execution bots can connect via our zero-bond Volume-Gated SDK. Higher API rate limits and low-latency WebSocket quotas unlock automatically as your volume grows, while verified ecosystem partners can apply for custom partner revenue tiers and grant programs.</p>
+      </details>
+
+      <details>
+        <summary>When does the Dywe public mainnet launch?</summary>
+        <p>Dywe mainnet opens immediately following the formal completion of independent tier-1 security audits with zero unresolved critical findings. Built on an optimized Arbitrum Orbit L3 architecture, the exchange will onboard users in priority cohorts. Request early access through the waitlist to secure your spot.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="wrap">
+    <h2>Institutional execution. Sovereign custody.</h2>
+    <p class="lead">Early onboarding for active traders, algorithmic market makers, and institutional partners.</p>
+    <div class="cta-row">
+      <button class="btn btn-primary" data-wl>Request early access</button>
+      <button class="btn btn-ghost" data-wl data-role="institution">Institutional &amp; Partner Inquiries</button>
+    </div>
+  </div>
+</section>
+</main>
+
+<section class="follow-strip">
+  <div class="wrap follow-wrap">
+    <div class="follow-label">
+      <span>Follow us</span>
+    </div>
+    <div class="social-links">
+      <a href="https://x.com/DyweExchange" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Follow Dywe on X">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+      </a>
+
+      <a href="https://t.me/dywetrading" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Join Dywe Telegram">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+        </svg>
+      </a>
+
+      <a href="https://github.com/prdeqdev/DyweRustMicrostructuralAblationBacktest" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Dywe Open-Source Rust Backtest on GitHub">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <img src="images/main-logo.svg" alt="Dywe Logo">
+        <p>High-throughput non-custodial derivatives clearing infrastructure.</p>
+        <p>© 2026 Dywe. All rights reserved.</p>
+      </div>
+      <div>
+        <h4>Product &amp; Tech</h4>
+        <ul>
+          <li><a href="#how">Technology &amp; IBTE</a></li>
+          <li><a href="#benchmarks">Open-Source Benchmarks</a></li>
+          <li><a href="#pulse">Dywe Pulse &amp; AI</a></li>
+          <li><a href="#copy">Copy-Trading Vaults</a></li>
+          <li><a href="#security">Security Architecture</a></li>
+          <li><a href="#roadmap">Scaling Roadmap</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Ecosystem</h4>
+        <ul>
+          <li><a href="#who" data-wl data-role="trader">For Traders</a></li>
+          <li><a href="#who" data-wl data-role="market-maker">For Market Makers</a></li>
+          <li><a href="#who" data-wl data-role="institution">For Institutions</a></li>
+          <li><a href="#who" data-wl data-role="builder">Builder SDK</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:need">need</a></li>
+          <li><a href="https://dywe.exchange" target="_blank" rel="noopener noreferrer">dywe.exchange</a></li>
+          <li><a href="https://github.com/prdeqdev/DyweRustMicrostructuralAblationBacktest" target="_blank" rel="noopener noreferrer">GitHub Backtest (v0.3.3)</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">Dywe is currently in pre-mainnet development. Architectural latency figures, backtest outputs (dywe-ablation-sim v0.3.3), and interface illustrations represent engineering design specifications, deterministic historical replay simulations, and parameterized MEV counterfactuals—not a guarantee of future live execution performance. Trading leveraged derivatives involves significant risk of loss and is not suitable for all participants. Nothing on this website constitutes investment, legal, or tax advice, nor an offer or solicitation to purchase any financial instrument or digital asset. Access to the protocol may be restricted in certain jurisdictions.</p>
+  </div>
+</footer>
+
+<!-- WAITLIST MODAL -->
+<dialog id="wl" aria-labelledby="wlTitle">
+  <div id="wlForm">
+    <div class="m-head">
+      <div>
+        <h2 id="wlTitle">Request early access</h2>
+        <p>Select your execution profile and we will notify you as your onboarding cohort opens.</p>
+      </div>
+      <button class="x" type="button" id="wlClose" aria-label="Close">×</button>
+    </div>
+    <form id="f" action="https://formspree.io/f/xyeebdww" method="POST" novalidate>
+      <div class="row2">
+        <label for="fName">Full name<input id="fName" name="name" autocomplete="name" required placeholder="Alex Morgan"></label>
+        <label for="fEmail">Work email<input id="fEmail" name="email" type="email" autocomplete="email" required placeholder="alex@fund.com"></label>
+      </div>
+      <div class="row2">
+        <label for="fRole">I am a
+          <select id="fRole" name="role" required>
+            <option value="trader">Trader</option>
+            <option value="market-maker">Market maker</option>
+            <option value="institution">Institution or fund</option>
+            <option value="builder">Builder (wallet, terminal, algo)</option>
+          </select>
+        </label>
+        <label for="fVol">Monthly volume
+          <select id="fVol" name="volume">
+            <option value="under-1m">Under $1M</option>
+            <option value="1-10m">$1M to $10M</option>
+            <option value="10-100m">$10M to $100M</option>
+            <option value="100m-plus">$100M or more</option>
+          </select>
+        </label>
+      </div>
+      <div class="row2">
+        <label for="fOrg"><span>Company or fund <span class="opt">(optional)</span></span><input id="fOrg" name="org" autocomplete="organization" placeholder="Acme Capital"></label>
+        <label for="fTg"><span>Telegram <span class="opt">(optional)</span></span><input id="fTg" name="telegram" placeholder="@handle"></label>
+      </div>
+      <label class="chk" for="fOk"><input id="fOk" name="consent" type="checkbox" required><span>I agree that Dywe may contact me regarding platform access and institutional onboarding.</span></label>
+      <div class="err" id="fErr" role="alert"></div>
+      
+      <div class="hp-field" aria-hidden="true">
+        <label>Leave this field empty
+          <input type="text" name="website" tabindex="-1" autocomplete="off">
+        </label>
+      </div>
+      <button class="btn btn-primary" type="submit" id="fSubmit">Request access</button>
+    </form>
+  </div>
+  <div id="wlDone" class="ok" hidden>
+    <div class="tick">✓</div>
+    <h2>You are on the list</h2>
+    <p>Thank you. We will reach out as soon as onboarding opens for your cohort.</p>
+    <p class="preview" id="wlPreview" hidden>Preview build: this page is not connected to a waitlist store yet, so nothing was saved.</p>
+    <button class="btn btn-ghost" type="button" id="wlDoneClose">Close</button>
+  </div>
+</dialog>
+</body>
+</html>

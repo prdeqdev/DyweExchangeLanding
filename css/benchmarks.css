@@ -1,0 +1,367 @@
+
+
+#benchmarks .bm-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px 32px;
+  margin-bottom: 28px;
+}
+
+#benchmarks .bm-head > div:first-child {
+  max-width: 720px;
+}
+
+#benchmarks .bm-head code,
+#benchmarks .bm-tab code,
+#benchmarks .bm-footnote code {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.88em;
+  padding: 1px 6px;
+  border-radius: 5px;
+  background: var(--panel2, rgba(255, 255, 255, 0.06));
+  border: 1px solid var(--line2, rgba(255, 255, 255, 0.1));
+}
+
+#benchmarks .bm-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+#benchmarks .bm-badge {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  color: var(--muted, #9b97b0);
+  letter-spacing: 0.01em;
+}
+
+/* Dataset tabs */
+#benchmarks .bm-controls {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+#benchmarks .bm-tab {
+  appearance: none;
+  text-align: left;
+  cursor: pointer;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: var(--panel, rgba(255, 255, 255, 0.025));
+  border: 1px solid var(--line2, rgba(255, 255, 255, 0.1));
+  color: inherit;
+  transition: border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
+}
+
+#benchmarks .bm-tab:hover {
+  border-color: var(--accent, #a78bfa);
+  transform: translateY(-1px);
+}
+
+#benchmarks .bm-tab.is-active {
+  background: var(--accent-soft, rgba(167, 139, 250, 0.12));
+  border-color: var(--accent, #a78bfa);
+}
+
+#benchmarks .bm-tab strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+#benchmarks .bm-tab span {
+  display: block;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  color: var(--muted, #9b97b0);
+}
+
+/* 4 KPI summary cards */
+#benchmarks .bm-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+#benchmarks .bm-kpi {
+  padding: 18px 18px 16px;
+  border-radius: 14px;
+  background: var(--panel2, rgba(255, 255, 255, 0.035));
+  border: 1px solid var(--line2, rgba(255, 255, 255, 0.09));
+}
+
+#benchmarks .bm-kpi-label {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted, #9b97b0);
+  margin-bottom: 8px;
+}
+
+#benchmarks .bm-kpi-val {
+  display: block;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: clamp(22px, 2.2vw, 30px);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+#benchmarks .bm-kpi-val.is-good {
+  color: #4ade80;
+}
+
+#benchmarks .bm-kpi-val.is-accent {
+  color: var(--accent, #c4b5fd);
+}
+
+#benchmarks .bm-kpi-sub {
+  margin: 0;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--dim, #8a869e);
+}
+
+/* 2-column detail grid */
+#benchmarks .bm-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 16px;
+}
+
+#benchmarks .bm-panel {
+  padding: 20px;
+  border-radius: 14px;
+  background: var(--panel, rgba(255, 255, 255, 0.025));
+  border: 1px solid var(--line2, rgba(255, 255, 255, 0.09));
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+#benchmarks .bm-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+#benchmarks .bm-panel-head h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+#benchmarks .bm-chip {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--accent-soft, rgba(167, 139, 250, 0.14));
+  color: var(--accent, #c4b5fd);
+  border: 1px solid rgba(167, 139, 250, 0.25);
+}
+
+/* Comparison table */
+#benchmarks .bm-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+#benchmarks .bm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+#benchmarks .bm-table th,
+#benchmarks .bm-table td {
+  padding: 10px 10px;
+  text-align: right;
+  border-bottom: 1px solid var(--line2, rgba(255, 255, 255, 0.08));
+  white-space: nowrap;
+}
+
+#benchmarks .bm-table th:first-child,
+#benchmarks .bm-table td:first-child {
+  text-align: left;
+  padding-left: 8px;
+}
+
+#benchmarks .bm-table th {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted, #9b97b0);
+  font-weight: 600;
+}
+
+#benchmarks .bm-table td {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+}
+
+#benchmarks .bm-table td:first-child {
+  font-family: inherit;
+  font-weight: 500;
+}
+
+#benchmarks .bm-table tr.is-dywe {
+  background: var(--accent-soft, rgba(167, 139, 250, 0.12));
+}
+
+#benchmarks .bm-table tr.is-dywe td {
+  color: #ffffff;
+  font-weight: 600;
+  border-bottom-color: rgba(167, 139, 250, 0.35);
+}
+
+/* Interactive MEV scenario explorer */
+#benchmarks .bm-desc {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--muted, #9b97b0);
+  line-height: 1.5;
+}
+
+#benchmarks .bm-scenarios {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+#benchmarks .bm-pill {
+  appearance: none;
+  cursor: pointer;
+  padding: 8px 6px;
+  border-radius: 8px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  color: var(--muted, #9b97b0);
+  background: var(--panel2, rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--line2, rgba(255, 255, 255, 0.1));
+  transition: all 0.16s ease;
+}
+
+#benchmarks .bm-pill:hover {
+  border-color: var(--accent, #a78bfa);
+  color: #ffffff;
+}
+
+#benchmarks .bm-pill.is-active {
+  background: var(--accent, #a78bfa);
+  border-color: var(--accent, #a78bfa);
+  color: #090710;
+  font-weight: 600;
+}
+
+#benchmarks .bm-delta-card {
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--panel2, rgba(255, 255, 255, 0.035));
+  border: 1px solid var(--line2, rgba(255, 255, 255, 0.09));
+}
+
+#benchmarks .bm-delta-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+#benchmarks .bm-delta-label {
+  font-size: 13px;
+  color: var(--muted, #9b97b0);
+}
+
+#benchmarks .bm-delta-num {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+#benchmarks .bm-delta-num.is-win {
+  color: #4ade80;
+}
+
+#benchmarks .bm-meter {
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+#benchmarks .bm-meter-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent, #a78bfa), #4ade80);
+  transition: width 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#benchmarks .bm-delta-verdict {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted, #b4b0c7);
+}
+
+#benchmarks .bm-footnote {
+  margin: auto 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--dim, #8a869e);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  #benchmarks .bm-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #benchmarks .bm-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  #benchmarks .bm-controls {
+    grid-template-columns: 1fr;
+  }
+  #benchmarks .bm-kpis {
+    grid-template-columns: 1fr;
+  }
+  #benchmarks .bm-scenarios {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+#collateral .cctp-flow path {
+  stroke-dasharray: 6 14;
+  animation: cctpStream 1.4s linear infinite;
+}
+
+#collateral .cctp-flow path:nth-child(2) { animation-delay: -0.35s; }
+#collateral .cctp-flow path:nth-child(3) { animation-delay: -0.70s; }
+#collateral .cctp-flow path:nth-child(4) { animation-delay: -1.05s; }
+
+@keyframes cctpStream {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: -20; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #collateral .cctp-flow path { animation: none; }
+}
