@@ -150,8 +150,8 @@
       <div class="step">
         <div class="n">4 &nbsp;Match</div>
         <h3>Post-decrypt ALO-first CLOB</h3>
-        <p>Compiled native Rust on Arbitrum Stylus executes New (ALO) → Cancel → Taker in resident memory with 0.0% dropped taker volume.</p>
-        <span class="k">&lt;10 ms · 0.0% drops</span>
+        <p>Compiled native Rust on Arbitrum Stylus executes New (ALO) → Cancel → Taker in resident memory with &lt;0.04% dropped USD volume (L1).</p>
+        <span class="k">&lt;10 ms · ALO-first</span>
       </div>
     </div>
 
@@ -170,33 +170,33 @@
   </div>
 </section>
 
-<!-- OPEN-SOURCE BENCHMARKS (v0.3.4) -->
+<!-- OPEN-SOURCE BENCHMARKS (v0.3.5) -->
 <section id="benchmarks">
   <div class="wrap">
     <div class="bm-head">
       <div>
-        <p class="eyebrow">Open-Source Microstructure Backtest · v0.3.4</p>
+        <p class="eyebrow">Open-Source Microstructure Backtest · v0.3.5</p>
         <h2 class="h2">Verified on 30 pair-days of Binance Futures &amp; Native L1 data.</h2>
-        <p class="lead">Deterministic fixed-point (<code>i64</code>/<code>i128</code>) Rust causal replay across $247.5B in historical volume comparing Continuous FIFO, 70 ms Open Priority Batches, 100 ms FBA, and Dywe 50 ms IBTE.</p>
+        <p class="lead">Deterministic fixed-point (<code>i64</code>/<code>i128</code>) Rust causal replay across $240.5B in pure historical taker volume comparing Continuous FIFO, 70 ms Open Priority Batches, 100 ms FBA, and Dywe 50 ms / 70 ms IBTE.</p>
       </div>
       <div class="bm-actions">
         <a class="btn btn-primary btn-sm" href="https://github.com/prdeqdev/DyweRustMicrostructuralAblationBacktest" target="_blank" rel="noopener noreferrer">View GitHub Repo ↗</a>
-        <span class="bm-badge">15 preflight checks · 16 unit tests · 95% CI</span>
+        <span class="bm-badge">17 preflight checks · 18 unit tests · 95% CI</span>
       </div>
     </div>
 
     <div class="bm-controls" role="tablist" aria-label="Backtest dataset selector">
       <button class="bm-tab is-active" type="button" role="tab" aria-selected="true" data-bm-ds="l1">
         <strong>Native L1 <code>bookTicker</code></strong>
-        <span>BTC+ETH+SOL · 9 pair-days · $64.4B</span>
+        <span>BTC+ETH+SOL · 9 pair-days · $62.9B pure vol</span>
       </button>
       <button class="bm-tab" type="button" role="tab" aria-selected="false" data-bm-ds="primary">
         <strong>Primary <code>BTC+ETH</code></strong>
-        <span>14 pair-days · $168.2B · Bid/Ask proxy</span>
+        <span>14 pair-days · $164.9B pure vol · Bid/Ask proxy</span>
       </button>
       <button class="bm-tab" type="button" role="tab" aria-selected="false" data-bm-ds="sol">
         <strong>Altcoin <code>SOLUSDT</code></strong>
-        <span>7 pair-days · $12.6B organic / $15.1B w/ probe</span>
+        <span>7 pair-days · $12.6B pure organic (no probe)</span>
       </button>
     </div>
 
@@ -204,22 +204,22 @@
       <article class="bm-kpi">
         <span class="bm-kpi-label">1s Toxic MM Markout vs. FIFO</span>
         <strong class="bm-kpi-val is-good" data-bm-field="markoutDelta">−40.4%</strong>
-        <p class="bm-kpi-sub" data-bm-field="markoutSub">−0.782 vs. −1.312 bp · −87.1% stale sniping</p>
+        <p class="bm-kpi-sub" data-bm-field="markoutSub">−0.782 vs. −1.312 bp · up to −51.1% at 1 ms react</p>
       </article>
       <article class="bm-kpi">
         <span class="bm-kpi-label">Dropped Taker Volume (USD%)</span>
-        <strong class="bm-kpi-val" data-bm-field="droppedVol">0.0%</strong>
-        <p class="bm-kpi-sub" data-bm-field="droppedSub">Post-decrypt New (ALO) → Cancel → Taker</p>
+        <strong class="bm-kpi-val" data-bm-field="droppedVol">0.036%</strong>
+        <p class="bm-kpi-sub" data-bm-field="droppedSub">Post-decrypt ALO-first (&lt;0.12% at 0.15 bp req)</p>
       </article>
       <article class="bm-kpi">
         <span class="bm-kpi-label">Zero-MEV Cost vs. 70 ms Open Batch</span>
         <strong class="bm-kpi-val" data-bm-field="zeroMev">+0.005 bp</strong>
-        <p class="bm-kpi-sub" data-bm-field="zeroMevSub">Taker All-In delta (MM s*net: +0.115 bp for 35 ms dec)</p>
+        <p class="bm-kpi-sub" data-bm-field="zeroMevSub">Taker All-In delta · Pure 35 ms decrypt: +0.007 bp at matched 70 ms</p>
       </article>
       <article class="bm-kpi">
         <span class="bm-kpi-label">Taker All-In Savings Under MEV</span>
-        <strong class="bm-kpi-val is-accent" data-bm-field="mevSavings">−17.6% to −31.7%</strong>
-        <p class="bm-kpi-sub" data-bm-field="mevSavingsSub">25%–50% capture / 1.0 bp · Breakeven at 10% / 0.5 bp</p>
+        <strong class="bm-kpi-val is-accent" data-bm-field="mevSavings">−11.7% to −26.7%</strong>
+        <p class="bm-kpi-sub" data-bm-field="mevSavingsSub">25%–50% cap / 1.0 bp (10% leak, exp=all) · eff_leak* = 8.4%</p>
       </article>
     </div>
 
@@ -246,28 +246,35 @@
                 <td>−1.312 bp</td>
                 <td>1.112 bp</td>
                 <td>0.670 bp</td>
-                <td>0.0%</td>
+                <td>0.004%</td>
               </tr>
               <tr>
                 <td>B: Open Batch 70 ms (hl)</td>
                 <td>−0.667 bp</td>
                 <td>0.467 bp</td>
                 <td>0.651 bp</td>
-                <td>0.0%</td>
+                <td>0.026%</td>
               </tr>
               <tr>
                 <td>C: Uniform FBA 100 ms</td>
                 <td>−0.622 bp</td>
                 <td>0.422 bp</td>
                 <td>0.671 bp</td>
-                <td>0.0%</td>
+                <td>0.013%</td>
               </tr>
               <tr class="is-dywe">
                 <td>D: Dywe IBTE 50 ms (35 ms dec)</td>
                 <td>−0.782 bp</td>
                 <td>0.582 bp</td>
                 <td>0.656 bp</td>
-                <td>0.0%</td>
+                <td>0.036%</td>
+              </tr>
+              <tr class="is-dywe">
+                <td>D: Dywe IBTE 70 ms (35 ms dec)</td>
+                <td>−0.674 bp</td>
+                <td>0.474 bp</td>
+                <td>0.658 bp</td>
+                <td>0.026%</td>
               </tr>
             </tbody>
           </table>
@@ -280,10 +287,10 @@
           <h3>Break-Even vs. 70 ms Open Batch (D − B)</h3>
           <span class="bm-chip">Parameterized MEV Grid</span>
         </div>
-        <p class="bm-desc">Delta in total taker All-In Net cost (bps) for large orders ≥$50k (negative values mean Dywe is strictly cheaper at 95% CI).</p>
+        <p class="bm-desc">Delta in total taker All-In Net cost (bps) when MEV targets large 1-ms bursts (≥$50k) (negative values mean Dywe is strictly cheaper at 95% CI).</p>
         <div class="bm-scenarios" id="bmScenarios" role="group" aria-label="MEV scenario selector">
           <button class="bm-pill is-active" type="button" data-bm-sc="zero">MEV = 0%</button>
-          <button class="bm-pill" type="button" data-bm-sc="breakeven">10% / 0.5 bp</button>
+          <button class="bm-pill" type="button" data-bm-sc="low">25% / 0.5 bp</button>
           <button class="bm-pill" type="button" data-bm-sc="mid">25% / 1.0 bp</button>
           <button class="bm-pill" type="button" data-bm-sc="high">50% / 1.0 bp</button>
         </div>
@@ -298,7 +305,7 @@
           </div>
           <p class="bm-delta-verdict" data-bm-field="scVerdict">Statistically near-identical taker All-In Net cost to a 70 ms open priority batch at MEV = 0, with full pre-commit payload encryption.</p>
         </div>
-        <p class="bm-footnote">Counterfactual MEV rows (&gt;0% capture) use parameterized impact grids (50% MM share, +0.50 bp rebate, 0.30 bp OpEx, min(capture, leak) cap). Full CSV grids and HTML charts are published in <code>results/</code>.</p>
+        <p class="bm-footnote">Counterfactual MEV rows (&gt;0% capture) use uniform exposure (<code>exp=all</code>, 50% MM share, 10% leak, 0.50 bp maker rebate paid to MM, 0.30 bp OpEx). Full CSV grids, break-even leakage tables, and HTML charts are published in <code>results/</code>.</p>
       </div>
     </div>
   </div>
@@ -310,11 +317,11 @@
     <div class="nums">
       <div class="num"><b>&lt;10 ms</b><span>In-memory matching core</span></div>
       <div class="num"><b>−40.4%</b><span>Toxic 1s MM markout vs. FIFO (L1)</span></div>
-      <div class="num"><b>0.0%</b><span>Dropped USD volume (ALO-first)</span></div>
+      <div class="num"><b>+0.007 bp</b><span>Pure 35 ms decrypt cost (L1, 70 ms)</span></div>
       <div class="num"><b>&lt;2 s</b><span>Universal Multi-Chain Soft-Credit</span></div>
       <div class="num"><b>−0.005%</b><span>SLA Maker rebate, 0.020% Taker</span></div>
     </div>
-    <p class="note">Production architectural specifications, baseline fee schedule, and Native L1 backtest outputs (v0.3.4).</p>
+    <p class="note">Production architectural specifications, baseline fee schedule, and Native L1 backtest outputs (v0.3.5).</p>
   </div>
 </section>
 
@@ -486,7 +493,7 @@
         <span class="for">Active Traders</span>
         <h3>MEV-shielded execution</h3>
         <ul>
-          <li><b>0.020% taker fees</b> with −17.6% to −31.7% lower All-In cost under MEV vs. open CLOBs (Native L1).</li>
+          <li><b>0.020% taker fees</b> with −11.7% to −26.7% lower All-In cost in MEV scenarios vs. open CLOBs (Native L1, exp=all).</li>
           <li><b>Dywe Pulse &amp; AI</b> embedded directly in the order book.</li>
           <li><b>1-click copy-trading</b> in non-custodial ERC-4626 smart vaults.</li>
           <li><b>&lt;2s Universal Soft-Credit</b> across 4+ chains via Circle CCTP.</li>
@@ -498,8 +505,8 @@
         <h3>Quote size without adverse-selection leakage</h3>
         <ul>
           <li><b>Threshold-sealed flow (IBTE)</b> prevents mempool front-running and sandwich MEV.</li>
-          <li><b>Post-decrypt ALO → Cancel → Taker</b> eliminates dead-gap drops (0.0% dropped volume).</li>
-          <li><b>−40.4% toxic 1s markout</b> and <b>−87.1% stale sniping</b> vs. FIFO on Native L1 data.</li>
+          <li><b>Post-decrypt ALO → Cancel → Taker</b> eliminates dead-gap drops (&lt;0.04% dropped USD on L1 baseline).</li>
+          <li><b>−40.4% to −51.1% toxic 1s markout</b> vs. FIFO on Native L1 (1–10 ms react) at +0.000–0.007 bp pure decrypt cost.</li>
           <li><b>−0.005% maker rebate</b> on a 100% neutral venue with zero house HLP pool.</li>
         </ul>
         <button class="btn btn-ghost" data-wl data-role="market-maker">Join as a market maker</button>
@@ -508,7 +515,7 @@
         <span class="for">Institutions &amp; Desks</span>
         <h3>Prime-broker grade settlement</h3>
         <ul>
-          <li><b>Pre-trade privacy</b> for large blocks (≥$50k, 68%–71% of volume) at +0.005 bps zero-MEV taker delta (L1).</li>
+          <li><b>Pre-trade privacy</b> for large bursts (≥$50k, 48%–71% of volume) at +0.005 bps zero-MEV taker delta (L1).</li>
           <li><b>FIX 4.4 gateways</b> and 1.35x–1.45x portfolio cross-margin on Phase 2 L1.</li>
           <li><b>Canonical Circle USDC clearing</b> with zero custom bridge exposure.</li>
           <li><b>Tier-1 security audits</b> and on-chain parameter timelocks.</li>
@@ -661,7 +668,7 @@
     <div class="faq">
       <details open>
         <summary>How do encrypted micro-batches reduce adverse selection and MEV?</summary>
-        <p>On transparent CLOBs, latency bots snipe stale market maker quotes during external price moves and sandwich large directional orders (≥$50k) in the mempool—forcing makers to widen spreads. Dywe encrypts all order messages (New ALO, Cancel, Taker) client-side via BLS12-381 threshold encryption (IBTE) inside 50 ms micro-batches, decrypts in matching-engine memory (~35 ms), and executes New (ALO) → Cancel → Taker priority before fills clear. In our open-source Rust backtest across Native L1 Binance Futures data (v0.3.4), this cuts 1s toxic MM markout by 40.4% vs. FIFO (−87.1% stale sniping) with 0.0% dropped volume and +0.005 bps zero-MEV taker delta, while reducing taker All-In costs by 17.6%–31.7% in parameterized MEV scenarios (25%–50% capture / 1.0 bp impact).</p>
+        <p>On transparent CLOBs, latency bots snipe stale market maker quotes during external price moves and sandwich large directional orders (≥$50k) in the mempool—forcing makers to widen spreads. Dywe encrypts all order messages (New ALO, Cancel, Taker) client-side via BLS12-381 threshold encryption (IBTE) inside 50 ms micro-batches, decrypts in matching-engine memory (~35 ms), and executes New (ALO) → Cancel → Taker priority before fills clear. In our open-source Rust backtest across Native L1 Binance Futures data (v0.3.5), this cuts 1s toxic MM markout by 40.4% at 10 ms MM reaction (up to 51.1% at 1 ms reaction or 0.15 bp requote threshold) vs. FIFO with &lt;0.04% dropped USD volume at baseline and +0.005 bps zero-MEV taker delta. Isolating 35 ms threshold decryption at a matched 70 ms window adds only +0.000 bps (BTC/ETH) and +0.007 bps (L1) to MM equilibrium half-spreads, while parameterized uniform-exposure MEV scenarios (25%–50% capture / 1.0 bp impact / 10% leak) yield 11.7%–26.7% lower taker All-In cost (8.7%–21.0% on unmerged raw aggTrades).</p>
       </details>
 
       <details>
@@ -786,11 +793,11 @@
         <ul>
           <li><a href="mailto:dyweceo@dywe.exchange">dyweceo@dywe.exchange</a></li>
           <li><a href="https://dywe.exchange" target="_blank" rel="noopener noreferrer">dywe.exchange</a></li>
-          <li><a href="https://github.com/prdeqdev/DyweRustMicrostructuralAblationBacktest" target="_blank" rel="noopener noreferrer">GitHub Backtest (v0.3.4)</a></li>
+          <li><a href="https://github.com/prdeqdev/DyweRustMicrostructuralAblationBacktest" target="_blank" rel="noopener noreferrer">GitHub Backtest (v0.3.5)</a></li>
         </ul>
       </div>
     </div>
-    <p class="legal">Dywe is currently in pre-mainnet development. Architectural latency figures, backtest outputs (dywe-ablation-sim v0.3.4), and interface illustrations represent engineering design specifications, deterministic historical replay simulations, and parameterized MEV counterfactuals—not a guarantee of future live execution performance. Trading leveraged derivatives involves significant risk of loss and is not suitable for all participants. Nothing on this website constitutes investment, legal, or tax advice, nor an offer or solicitation to purchase any financial instrument or digital asset. Access to the protocol may be restricted in certain jurisdictions.</p>
+    <p class="legal">Dywe is currently in pre-mainnet development. Architectural latency figures, backtest outputs (dywe-ablation-sim v0.3.5), and interface illustrations represent engineering design specifications, deterministic historical replay simulations, and parameterized MEV counterfactuals—not a guarantee of future live execution performance. Trading leveraged derivatives involves significant risk of loss and is not suitable for all participants. Nothing on this website constitutes investment, legal, or tax advice, nor an offer or solicitation to purchase any financial instrument or digital asset. Access to the protocol may be restricted in certain jurisdictions.</p>
   </div>
 </footer>
 
